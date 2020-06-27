@@ -20,6 +20,19 @@ cd your_folders_name
 mix install
 ```
 
+## Sockets bash command
+
+You can also install sockets as a bash command:
+
+* Copy all data from usr/local/bin
+```
+cp usr/local/bin/* /usr/local/bin/
+```
+
+* Give privileges to users according to your needs.
+
+* Change paths according to your server/machine.
+
 ## Usage
 
 Make command comes with a useful "default" command which explains every available command:
