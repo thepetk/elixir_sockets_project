@@ -1,0 +1,49 @@
+#!/bin/sh
+# Name: sockets
+# Description: script to manage the sockets project
+# Version 1.0
+# Update Date: 30/01/2020
+# Version History
+# Author        Date            Desciption                      Version
+# T. Petkos     30/01/2020      Elixir Sockets Daemon             1.0
+
+# Handles elixir sockets daemon
+sockets="sockets"
+path="bin/mix"
+
+# No arguments passed to the script
+if [ $# -ne 1 ]; then
+  echo 1>&2 "usage: ${0##*/} -status | -start | -stop | -log | -debug"
+  exit 2
+fi
+
+# Display the status of sockets
+if [ $1 = "-status" ]; then
+        v=`ps -aef | grep $path | grep -v grep | awk '{print $2}' | head -1`
+        if [ -z $v ]
+        then
+                echo "${0##*/}: $sockets service is down"
+        else
+                echo "${0##*/}: $sockets is running"
+        fi
+# Start sockets
+elif [ $1 = "-start" ]; then
+        cd /usr/local/bin
+        $sockets
+# Stop sockets
+elif [ $1 = "-stop" ]; then
+        v=`ps -aef | grep $path | grep -v grep | awk '{print $2}' | head -1`
+        if [ -z $v ]; then
+                echo "${0##*/}: $sockets is already stopped"
+        else
+                kill -9 $v
+        fi
+# Display a log of all incoming data
+elif [ $1 = "-log" ]; then
+        clear
+        tail -f path-to-your-logfile
+# Argument passed was incorrect. Display usage
+else
+        echo 1>&2 "usage: ${0##*/} -status | -start | -stop | -log | -debug"
+        exit 2
+fi
